@@ -1,11 +1,11 @@
 import numpy as np
 
 
-def safe_division(nominator, denominator):
+def safe_division(nominator: np.array, denominator: np.array) -> np.array:
     """
     Function that safely divides two numbers, so we don't divide by zero
-    :param nominator: nominator of expression
-    :param denominator: denominator of expression
+    :param nominator:   'float' nominator of expression
+    :param denominator: 'float' denominator of expression
     :return: safely divided nominator by denominator
     """
     safe_division_constant = 0.0000001
@@ -13,11 +13,11 @@ def safe_division(nominator, denominator):
     return safe_divided
 
 
-def get_matrix_multiplication(left_matrix, right_matrix):
+def get_matrix_multiplication(left_matrix: np.array, right_matrix: np.array) -> np.array:
     """
     Multiply two matrices
-    :param left_matrix: left side of multiplication
-    :param right_matrix: right side of multiplication
+    :param left_matrix:   'np.array' left side of multiplication
+    :param right_matrix:  'np.array' right side of multiplication
     :return: multiplied left by right
     """
     return np.dot(left_matrix, right_matrix)
