@@ -3,4 +3,9 @@ import numpy as np
 
 class WSubproblem():
 
-    def __init__(self):
+    def __init__(self, lambda_1, V_matrix, Z_matrix, rho):
+        self.lambda_constant = lambda_1
+        self.V = V_matrix
+        self.Z = Z_matrix
+        self.rho = rho
+
