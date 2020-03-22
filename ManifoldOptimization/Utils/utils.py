@@ -7,9 +7,13 @@ def safe_division(nominator, denominator):
     return safe_divided
 
 
-def matrix_multiplication(left_matrix, right_matrix):
+def get_matrix_multiplication(left_matrix, right_matrix):
     return np.dot(left_matrix, right_matrix)
 
 
-def matrix_transpose(matrix_to_transpose: np.array):
+def get_matrix_transpose(matrix_to_transpose: np.array):
     return matrix_to_transpose.transpose()
+
+
+def get_matrix_diagonal(matrix_to_get_diagonal):
+    return np.diagonal(matrix_to_get_diagonal)
