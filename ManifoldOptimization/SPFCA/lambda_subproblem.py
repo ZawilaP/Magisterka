@@ -11,5 +11,3 @@ class LambdaSubproblem():
         self.lambda_constant = lambda_2
         self.V = V_matrix
         self.X = X_matrix
-
-        print(lol)

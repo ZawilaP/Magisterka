@@ -7,4 +7,4 @@ Development
 
 Jak skończę jakiś feature i będę go pewny, to będę mergował na developie.
 
-Spodziewam się dużej ilości zmian w pomysłach, więc chcę się upewnić, że będziemy to czyste i przejrzyste.
+Spodziewam się dużej ilości zmian w pomysłach, więc chcę się upewnić, że będzie to czyste i przejrzyste.
