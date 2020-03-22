@@ -14,6 +14,12 @@ def safe_division(nominator, denominator):
 
 
 def get_matrix_multiplication(left_matrix, right_matrix):
+    """
+    Multiply two matrices
+    :param left_matrix: left side of multiplication
+    :param right_matrix: right side of multiplication
+    :return: multiplied left by right
+    """
     return np.dot(left_matrix, right_matrix)
 
 
