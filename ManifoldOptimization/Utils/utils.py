@@ -2,6 +2,12 @@ import numpy as np
 
 
 def safe_division(nominator, denominator):
+    """
+    Function that safely divides two numbers, so we don't divide by zero
+    :param nominator: nominator of expression
+    :param denominator: denominator of expression
+    :return: safely divided nominator by denominator
+    """
     safe_division_constant = 0.0000001
     safe_divided = nominator / (denominator + safe_division_constant)
     return safe_divided
