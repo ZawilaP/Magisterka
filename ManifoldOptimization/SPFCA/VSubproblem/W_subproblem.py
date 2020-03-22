@@ -1,5 +1,6 @@
-from ManifoldOptimization.Utils.utils import get_matrix_diagonal, get_matrix_multiplication, get_matrix_transpose, reconstruct_vector_into_diagonal_matrix
+from ManifoldOptimization.Utils.utils import numpy_to_pandas, pandas_to_numpy, elementwise_multiplication, get_matrix_sign
 import numpy as np
+import pandas as pd
 
 class WSubproblem():
 
@@ -10,11 +11,23 @@ class WSubproblem():
         self.W = W_matrix
         self.rho = rho
         self.Y = self.V + self.Z
+        self.W_k = self.compute_new_W_k()
 
-    def soft_threshold_for_matrix(self, element):
-        return max([0, element - (self.lambda_constant/self.rho)])
-
-
+    def __call__(self, *args, **kwargs):
+        return self.W_k
 
     def compute_new_W_k(self):
+        rho = self.rho
+        lambda_constant = self.lambda_constant
+
+        def soft_threshold_for_matrix(element):
+            return max([0, element - (lambda_constant / rho)])
+
+        Y_pandas = numpy_to_pandas(self.Y)
+        Y_soft_thresholded = pandas_to_numpy(Y_pandas.applymap(lambda x: soft_threshold_for_matrix(x)))
+        return elementwise_multiplication(get_matrix_sign(self.W), Y_soft_thresholded)
+
+
+
+
 
