@@ -31,8 +31,8 @@ class LambdaSubproblem():
         Z = get_matrix_multiplication(get_matrix_multiplication(V_transposed, X), self.V)
         return Z
 
-    def soft_threshold_operator(self, Z_element):
-        return max([0, Z_element - (self.lambda_constant / 2)])
+    def soft_threshold_operator(self, element):
+        return max([0, element - (self.lambda_constant / 2)])
 
     def compute_new_lambda_k(self):
         '''
