@@ -24,6 +24,11 @@ def get_matrix_multiplication(left_matrix, right_matrix):
 
 
 def get_matrix_transpose(matrix_to_transpose: np.array):
+    """
+    Get transposed matrix
+    :param matrix_to_transpose: matrix to be transposed
+    :return: transposed matrix
+    """
     return matrix_to_transpose.transpose()
 
 
