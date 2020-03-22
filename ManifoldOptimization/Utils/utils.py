@@ -34,6 +34,11 @@ def get_matrix_transpose(matrix_to_transpose: np.array) -> np.array:
 
 
 def get_matrix_diagonal(matrix_to_get_diagonal: np.array) -> np.array:
+    '''
+    Function that gets diagonal of a matrix
+    :param matrix_to_get_diagonal: 'np.array' from which we extract diagonal
+    :return: extracted diagonal of matrix
+    '''
     return np.diagonal(matrix_to_get_diagonal)
 
 
