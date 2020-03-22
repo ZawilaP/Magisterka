@@ -7,6 +7,8 @@ class LambdaSubproblem():
 
     Given input matrices we want to compute:
     \Lambda^{k+1} = \argmin _{\boldsymbol{V} \in  \mathcal{V}_{\boldsymbol{p} \times \boldsymbol{p}}^{\boldsymbol{S} \boldsymbol{u}}} \left\|V^{kT}XV^{k}- \Lambda \right\|_{F}^{2} +  \lambda_{2}\|\Lambda\|_{2}
+
+    This problem has nice analytical solution, which we use here to get Lambda^{K+1}
     '''
 
     def __init__(self, lambda_2, V_matrix, X_matrix):
