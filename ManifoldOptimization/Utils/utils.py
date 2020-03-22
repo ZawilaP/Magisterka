@@ -43,6 +43,11 @@ def get_matrix_diagonal(matrix_to_get_diagonal: np.array) -> np.array:
 
 
 def get_matrix_sign(matrix_to_get_sign: np.array) -> np.array:
+    '''
+    Function that gets elementwise signs of matrix elements
+    :param matrix_to_get_sign: 'np.array' matrix to get elementwise sign values
+    :return: matrix with values from (-1,0,1)
+    '''
     return np.sign(matrix_to_get_sign)
 
 
