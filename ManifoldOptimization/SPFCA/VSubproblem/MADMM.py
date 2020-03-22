@@ -10,5 +10,5 @@ class MADMM():
     V step - which requires a lot of of matrix operations
     '''
 
-    def init(self):
+    def __init__(self):
         print("to be implemented still")
