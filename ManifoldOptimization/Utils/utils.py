@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 
 def safe_division(nominator: np.array, denominator: np.array) -> np.array:
@@ -35,8 +36,17 @@ def get_matrix_transpose(matrix_to_transpose: np.array) -> np.array:
 def get_matrix_diagonal(matrix_to_get_diagonal):
     return np.diagonal(matrix_to_get_diagonal)
 
+
 def get_matrix_sign(matrix_to_get_sign):
     return np.sign(matrix_to_get_sign)
+
+
+def numpy_to_pandas(matrix_to_convert: np.array) -> pd.DataFrame:
+    return pd.DataFrame(matrix_to_convert)
+
+
+def pandas_to_numpy(matrix_to_convert: pd.DataFrame) -> np.array:
+    return matrix_to_convert.to_numpy()
 
 
 def reconstruct_vector_into_diagonal_matrix(lambda_k: np.array) -> np.array:
