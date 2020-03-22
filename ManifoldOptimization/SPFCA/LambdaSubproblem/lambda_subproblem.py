@@ -31,16 +31,18 @@ class LambdaSubproblem():
         Z = get_matrix_multiplication(get_matrix_multiplication(V_transposed, X), self.V)
         return Z
 
-    def soft_threshold_operator(self, element):
-        return max([0, element - (self.lambda_constant / 2)])
-
     def compute_new_lambda_k(self):
         '''
         Apply soft thresholding operator to Lasso problem
         :return: vector of new singular values
         '''
+        lambda_constant = self.lambda_constant
+
+        def soft_threshold_operator(Z_element):
+            return max([0, Z_element - (lambda_constant / 2)])
+
         Z_diagonal = get_matrix_diagonal(self.Z)
-        lambda_k = map(self.soft_threshold_operator, Z_diagonal)
+        lambda_k = map(soft_threshold_operator, Z_diagonal)
         return np.array(lambda_k)
 
 
