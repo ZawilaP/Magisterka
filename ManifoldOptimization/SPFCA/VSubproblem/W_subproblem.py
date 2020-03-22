@@ -17,6 +17,12 @@ class WSubproblem():
         return self.W_k
 
     def compute_new_W_k(self):
+        '''
+        Applies elementwise soft-thresholding and elementwise multiplication by signs of matrix
+        Using conversion from numpy to pandas, for computational sake, as applymap is more optimized than
+        numpy's vectorize, which will be beneficial for huge matrices
+        :return: new value of W
+        '''
         rho = self.rho
         lambda_constant = self.lambda_constant
 
