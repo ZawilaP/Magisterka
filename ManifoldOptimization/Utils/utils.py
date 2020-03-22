@@ -69,6 +69,12 @@ def pandas_to_numpy(matrix_to_convert: pd.DataFrame) -> np.array:
     return matrix_to_convert.to_numpy()
 
 def elementwise_multiplication(left_matrix: np.array, right_matrix: np.array) -> np.array:
+    '''
+    Perform elementwise multiplication of two matrices
+    :param left_matrix:  'np.array'
+    :param right_matrix: 'np.array'
+    :return: matrix from multiplication
+    '''
     return np.multiply(left_matrix, right_matrix)
 
 
