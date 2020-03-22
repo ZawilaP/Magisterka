@@ -1,4 +1,5 @@
 from ManifoldOptimization.Utils.utils import get_matrix_diagonal, get_matrix_multiplication, get_matrix_transpose
+import numpy as np
 
 class LambdaSubproblem():
     '''
