@@ -52,6 +52,11 @@ def get_matrix_sign(matrix_to_get_sign: np.array) -> np.array:
 
 
 def numpy_to_pandas(matrix_to_convert: np.array) -> pd.DataFrame:
+    '''
+    Convert numpy array to pandas DataFrame
+    :param matrix_to_convert: 'np.array' to be converted
+    :return: pd.DataFrame from np.array
+    '''
     return pd.DataFrame(matrix_to_convert)
 
 
