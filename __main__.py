@@ -1,4 +1,4 @@
-from Algorithm import algorithm
+from ManifoldOptimization.Algorithm import algorithm
 
 algorithm.greeting()
 
