@@ -48,6 +48,9 @@ def numpy_to_pandas(matrix_to_convert: np.array) -> pd.DataFrame:
 def pandas_to_numpy(matrix_to_convert: pd.DataFrame) -> np.array:
     return matrix_to_convert.to_numpy()
 
+def elementwise_multiplication(left_matrix: np.array, right_matrix: np.array) -> np.array:
+    return np.multiply(left_matrix, right_matrix)
+
 
 def reconstruct_vector_into_diagonal_matrix(lambda_k: np.array) -> np.array:
     '''
