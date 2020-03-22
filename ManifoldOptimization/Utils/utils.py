@@ -34,3 +34,12 @@ def get_matrix_transpose(matrix_to_transpose: np.array):
 
 def get_matrix_diagonal(matrix_to_get_diagonal):
     return np.diagonal(matrix_to_get_diagonal)
+
+
+def reconstruct_vector_into_diagonal_matrix(lambda_k):
+    '''
+    Transform singular values vector into diagonal matrix
+    :param lambda_k: 'np.array' vector to be transformed into matrix
+    :return: matrix with diagonal with lambda_k values, 0's otherwise
+    '''
+    return np.identity(len(lambda_k)) * np.outer(np.ones(len(lambda_k)), lambda_k)
