@@ -23,10 +23,10 @@ def get_matrix_multiplication(left_matrix, right_matrix):
     return np.dot(left_matrix, right_matrix)
 
 
-def get_matrix_transpose(matrix_to_transpose: np.array):
+def get_matrix_transpose(matrix_to_transpose: np.array) -> np.array:
     """
     Get transposed matrix
-    :param matrix_to_transpose: matrix to be transposed
+    :param matrix_to_transpose:  'np.array' matrix to be transposed
     :return: transposed matrix
     """
     return matrix_to_transpose.transpose()
@@ -36,7 +36,7 @@ def get_matrix_diagonal(matrix_to_get_diagonal):
     return np.diagonal(matrix_to_get_diagonal)
 
 
-def reconstruct_vector_into_diagonal_matrix(lambda_k):
+def reconstruct_vector_into_diagonal_matrix(lambda_k: np.array) -> np.array:
     '''
     Transform singular values vector into diagonal matrix
     :param lambda_k: 'np.array' vector to be transformed into matrix
