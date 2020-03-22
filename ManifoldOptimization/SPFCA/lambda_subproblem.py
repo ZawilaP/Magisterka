@@ -1,6 +1,5 @@
 from ManifoldOptimization.Utils.utils import get_matrix_diagonal, get_matrix_multiplication, get_matrix_transpose
 
-
 class LambdaSubproblem():
     '''
     This part is just a regular Lasso optimization problem but in a context of matrices from Stiefel manifold.
@@ -32,11 +31,15 @@ class LambdaSubproblem():
         return Z
 
     def compute_new_lambda_k(self):
-        def get_max(Z_element):
+        '''
+        Apply soft thresholding operator to Lasso problem
+        :return: vector of new singular values
+        '''
+        def soft_threshold_operator(Z_element):
             return max([0, Z_element - (self.lambda_constant / 2)])
 
-        Z_diagonal = get_matrix_diagonal(Z)
-        lambda_k = map(get_max, Z_diagonal)
+        Z_diagonal = get_matrix_diagonal(self.Z)
+        lambda_k = map(soft_threshold_operator, Z_diagonal)
         return np.array(lambda_k)
 
     def reconstruct_vector_into_diagonal_matrix(self):
