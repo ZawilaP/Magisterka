@@ -21,6 +21,10 @@ class LambdaSubproblem():
         return self.reconstructed_lambda_k
 
     def compute_z(self):
+        '''
+        Compute value of Z = V^{KT}XV^{K}
+        :return: computed value of Z
+        '''
         V_transposed = get_matrix_transpose(self.V)
         Z = get_matrix_multiplication(get_matrix_multiplication(V_transposed, X), self.V)
         return Z
