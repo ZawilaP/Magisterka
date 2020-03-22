@@ -33,11 +33,11 @@ def get_matrix_transpose(matrix_to_transpose: np.array) -> np.array:
     return matrix_to_transpose.transpose()
 
 
-def get_matrix_diagonal(matrix_to_get_diagonal):
+def get_matrix_diagonal(matrix_to_get_diagonal: np.array) -> np.array:
     return np.diagonal(matrix_to_get_diagonal)
 
 
-def get_matrix_sign(matrix_to_get_sign):
+def get_matrix_sign(matrix_to_get_sign: np.array) -> np.array:
     return np.sign(matrix_to_get_sign)
 
 
