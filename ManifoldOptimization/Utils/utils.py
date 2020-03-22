@@ -35,6 +35,9 @@ def get_matrix_transpose(matrix_to_transpose: np.array) -> np.array:
 def get_matrix_diagonal(matrix_to_get_diagonal):
     return np.diagonal(matrix_to_get_diagonal)
 
+def get_matrix_sign(matrix_to_get_sign):
+    return np.sign(matrix_to_get_sign)
+
 
 def reconstruct_vector_into_diagonal_matrix(lambda_k: np.array) -> np.array:
     '''
