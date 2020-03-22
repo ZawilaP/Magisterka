@@ -1,3 +1,5 @@
+from ManifoldOptimization.Utils.utils import matrix_multiplication
+
 class LambdaSubproblem(lambda_2, V_matrix, X_matrix):
     '''
     This part is just a regular Lasso optimization problem but in a context of matrices from Stiefel manifold.
