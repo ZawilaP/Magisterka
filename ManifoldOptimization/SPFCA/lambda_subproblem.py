@@ -1,4 +1,4 @@
-from ManifoldOptimization.Utils.utils import get_matrix_diagonal, get_matrix_multiplication, get_matrix_transpose
+from ManifoldOptimization.Utils.utils import get_matrix_diagonal, get_matrix_multiplication, get_matrix_transpose, reconstruct_vector_into_diagonal_matrix
 import numpy as np
 
 class LambdaSubproblem():
@@ -17,7 +17,7 @@ class LambdaSubproblem():
         self.X = X_matrix
         self.Z = self.compute_z()
         self.lambda_k = self.compute_new_lambda_k()
-        self.reconstructed_lambda_k = self.reconstruct_vector_into_diagonal_matrix()
+        self.reconstructed_lambda_k = reconstruct_vector_into_diagonal_matrix(self.lambda_k)
 
     def __call__(self, *args, **kwargs):
         return self.reconstructed_lambda_k
@@ -43,5 +43,4 @@ class LambdaSubproblem():
         lambda_k = map(soft_threshold_operator, Z_diagonal)
         return np.array(lambda_k)
 
-    def reconstruct_vector_into_diagonal_matrix(self):
-        return np.identity(len(self.lambda_k)) * np.outer(np.ones(len(self.lambda_k)), self.lambda_k)
+
