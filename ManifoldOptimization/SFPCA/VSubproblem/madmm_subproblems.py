@@ -18,6 +18,8 @@ class WSubproblem():
     def __call__(self, *args, **kwargs):
         return self.W_k
 
+#todo: Ta operacja znaku elementwise jest dodgy dla mnie, dopytaj o to
+
     def compute_new_W_k(self):
         '''
         Applies elementwise soft-thresholding and elementwise multiplication by signs of matrix

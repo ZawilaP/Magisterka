@@ -17,7 +17,15 @@ class SFPCA():
     def __call__(self, *args, **kwargs):
         return self.execute_sfpca()
 
+
+#todo: czy zakładać, że macierz wejściowa jest od razu kwadratowa, czy zrobić to na różne przypadki?
+#todo: ktora macierz normalizowac? Wejsciowa? XXT?
+
     def get_spectral_decomposition(self):
+        """
+        Function that gets decomposition of the input matrix
+        :return:
+        """
         eigenvalues, eigenvectors = np.linalg.eig(self.X)
         Lambda_matrix = reconstruct_vector_into_diagonal_matrix(eigenvalues)
         return Lambda_matrix, eigenvectors
