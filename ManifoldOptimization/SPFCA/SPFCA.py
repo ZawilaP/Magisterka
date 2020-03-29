@@ -18,4 +18,5 @@ class SFPCA():
         Lambda_matrix = reconstruct_vector_into_diagonal_matrix(eigenvalues)
         return Lambda_matrix, eigenvectors
 
+    def execute_sfpca
 
