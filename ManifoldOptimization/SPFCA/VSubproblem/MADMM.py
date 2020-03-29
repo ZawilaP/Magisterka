@@ -13,11 +13,14 @@ class MADMM():
     '''
 
     def __init__(self, Lambda_Matrix, X_matrix, rho, lambda_1):
-        self.V = V_matrix
+        self.V_hat = V_matrix
         self.Lambda = Lambda_Matrix
         self.X = X_matrix
         self.rho = rho
         self.lambda_1 = lambda_1
+        self.initialize_variables()
 
     def initialize_variables(self):
-
+        self.V_k = self.V_hat
+        self.W_k = self.V_hat
+        self.Z_k = np.zeros(self.Lambda.shape(0))
