@@ -35,9 +35,9 @@ class MADMM():
         self.X_part_with_inverse = get_matrix_inverse(
             get_matrix_multiplication(self.X_equation, get_matrix_transpose(self.X_equation)))
 
-        self.new_V = self.execute_MADMM()
+        self.new_V = self.execute_madmm()
 
-    def execute_MADMM(self):
+    def execute_madmm(self):
         step_W = self.W_k
         step_V = self.V_k
         step_Z = self.Z_k
