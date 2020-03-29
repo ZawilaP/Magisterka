@@ -23,6 +23,7 @@ class MADMM():
         self.rho = rho
         self.lambda_1 = lambda_1
         self.n_steps = n_steps
+
         # Initialize variables
         self.V_k = self.V_hat
         self.W_k = self.V_hat
