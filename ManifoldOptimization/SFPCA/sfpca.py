@@ -43,3 +43,5 @@ class SFPCA():
             step_v = MADMM(step_lambda, self.X, self.rho, self.lambda_1, self.madmm_steps)
 
         return get_matrix_diagonal(step_lambda), step_v
+
+    #todo: Czy zwracać zrekonstruowaną macierz?
