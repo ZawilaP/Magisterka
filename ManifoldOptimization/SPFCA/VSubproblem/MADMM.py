@@ -12,5 +12,12 @@ class MADMM():
     Z step - simple matrix subtraction and addition
     '''
 
-    def __init__(self):
-        print("to be implemented still")
+    def __init__(self, Lambda_Matrix, X_matrix, rho, lambda_1):
+        self.V = V_matrix
+        self.Lambda = Lambda_Matrix
+        self.X = X_matrix
+        self.rho = rho
+        self.lambda_1 = lambda_1
+
+    def initialize_variables(self):
+
