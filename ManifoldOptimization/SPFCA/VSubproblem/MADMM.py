@@ -40,7 +40,7 @@ class MADMM():
         step_W = self.W_k
         step_V = self.V_k
         step_Z = self.Z_k
-        for step in self.n_steps:
+        for step in range(self.n_steps):
             step_V = VSubProblem(step_Z, step_W, self.Lambda, self.X_equation, self.X_part_with_inverse, self.rho)
             step_W = WSubproblem(self.lambda_1, step_V, step_Z, step_W, self.rho)
             step_Z = ZSubProblem(step_Z, step_V, step_W)
