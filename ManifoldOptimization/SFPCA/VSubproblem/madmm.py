@@ -14,6 +14,9 @@ class MADMM():
     V step - which requires a lot of of matrix operations
 
     Z step - simple matrix subtraction and addition
+
+    Initializing all different forms of X computations in this class, so we don't have to compute them at every step
+    in it's subproblems.
     '''
 
     def __init__(self, Lambda_Matrix, X_matrix, rho, lambda_1, n_steps):
