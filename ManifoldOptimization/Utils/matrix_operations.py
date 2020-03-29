@@ -24,6 +24,11 @@ def get_matrix_multiplication(left_matrix: np.array, right_matrix: np.array) -> 
     return np.dot(left_matrix, right_matrix)
 
 def get_matrix_inverse(matrix_to_inverse: np.array) -> np.array:
+    '''
+    Get inverse of matrix
+    :param matrix_to_inverse: 'np.array' matrix to get inverse
+    :return: inversed matrix
+    '''
     return np.linalg.inv(matrix_to_inverse)
 
 
