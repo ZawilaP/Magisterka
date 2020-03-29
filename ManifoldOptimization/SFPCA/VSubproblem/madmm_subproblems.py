@@ -51,6 +51,10 @@ class VSubProblem():
         return self.V_k
 
     def compute_new_V_k(self):
+        """
+        Compute new eigenvalues for the MADMM step
+        :return: eigenvalues matrix
+        """
         first_brackets = (self.rho / 2) * get_matrix_inverse(np.identity(self.Lambda.shape(0)) + self.Lambda)
         second_brackets = (get_matrix_transpose(W) - get_matrix_transpose(Z))
         return get_matrix_multiplication(
