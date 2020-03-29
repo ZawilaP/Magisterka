@@ -23,6 +23,9 @@ def get_matrix_multiplication(left_matrix: np.array, right_matrix: np.array) -> 
     """
     return np.dot(left_matrix, right_matrix)
 
+def get_matrix_inverse(matrix_to_inverse: np.array) -> np.array:
+    return np.linalg.inv(matrix_to_inverse)
+
 
 def get_matrix_transpose(matrix_to_transpose: np.array) -> np.array:
     """

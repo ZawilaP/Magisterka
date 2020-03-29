@@ -1,4 +1,4 @@
-from ManifoldOptimization.Utils.utils import numpy_to_pandas, pandas_to_numpy, elementwise_multiplication, get_matrix_sign
+from ManifoldOptimization.Utils.matrix_operations import numpy_to_pandas, pandas_to_numpy, elementwise_multiplication, get_matrix_sign, get_matrix_transpose, get_matrix_inverse, get_matrix_multiplication
 import numpy as np
 import pandas as pd
 
@@ -32,6 +32,19 @@ class WSubproblem():
         Y_pandas = numpy_to_pandas(self.Y)
         Y_soft_thresholded = pandas_to_numpy(Y_pandas.applymap(lambda x: soft_threshold_for_matrix(x)))
         return elementwise_multiplication(get_matrix_sign(self.W), Y_soft_thresholded)
+
+class VSubProblem():
+
+    def __init__(self, Z_matrix, W_matrix, Lambda_matrix, X_matrix, rho):
+        self.rho = rho
+        self.Z = Z_matrix
+        self.W = W_matrix
+        self.Lambda = Lambda_matrix
+        self.X = X_matrix
+
+    def compute_new_V_k(self):
+        X_transposed = get_matrix_transpose(self.X)
+
 
 
 
