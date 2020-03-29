@@ -1,6 +1,9 @@
-from ManifoldOptimization.Utils.matrix_operations import get_matrix_diagonal, get_matrix_multiplication, get_matrix_transpose, reconstruct_vector_into_diagonal_matrix
-from ManifoldOptimization.SPFCA.VSubproblem.MADMM_Subproblems import WSubproblem, VSubProblem, ZSubProblem
 import numpy as np
+
+from ManifoldOptimization.SPFCA.VSubproblem.MADMM_Subproblems import WSubproblem, VSubProblem, ZSubProblem
+from ManifoldOptimization.Utils.matrix_operations import get_matrix_inverse, get_matrix_multiplication, \
+    get_matrix_transpose
+
 
 class MADMM():
     '''
@@ -20,20 +23,25 @@ class MADMM():
         self.rho = rho
         self.lambda_1 = lambda_1
         self.n_steps = n_steps
-        self.initialize_variables()
-        self.new_V = self.execute_MADMM()
-
-    def initialize_variables(self):
+        # Initialize variables
         self.V_k = self.V_hat
         self.W_k = self.V_hat
         self.Z_k = np.zeros(self.Lambda.shape(0))
+
+        # Initialize X variables
+        self.X_transposed = get_matrix_transpose(self.X)
+        self.X_equation = get_matrix_multiplication(self.X, self.X_transposed) - self.X_transposed + self.X
+        self.X_part_with_inverse = get_matrix_inverse(
+            get_matrix_multiplication(self.X_equation, get_matrix_transpose(self.X_equation)))
+
+        self.new_V = self.execute_MADMM()
 
     def execute_MADMM(self):
         step_W = self.W_k
         step_V = self.V_k
         step_Z = self.Z_k
         for step in self.n_steps:
-            step_V = VSubProblem(step_Z, step_W, self.Lambda, self.X_matrix, self.rho)
+            step_V = VSubProblem(step_Z, step_W, self.Lambda, self.X_equation, self.X_part_with_inverse, self.rho)
             step_W = WSubproblem(self.lambda_1, step_V, step_Z, step_W, self.rho)
             step_Z = ZSubProblem(step_Z, step_V, step_W)
 

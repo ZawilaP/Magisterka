@@ -1,5 +1,8 @@
-from ManifoldOptimization.Utils.matrix_operations import numpy_to_pandas, pandas_to_numpy, elementwise_multiplication, get_matrix_sign, get_matrix_transpose, get_matrix_inverse, get_matrix_multiplication
 import numpy as np
+
+from ManifoldOptimization.Utils.matrix_operations import numpy_to_pandas, pandas_to_numpy, elementwise_multiplication, \
+    get_matrix_sign, get_matrix_transpose, get_matrix_inverse, get_matrix_multiplication
+
 
 class WSubproblem():
 
@@ -32,26 +35,28 @@ class WSubproblem():
         Y_soft_thresholded = pandas_to_numpy(Y_pandas.applymap(lambda x: soft_threshold_for_matrix(x)))
         return elementwise_multiplication(get_matrix_sign(self.W), Y_soft_thresholded)
 
+
 class VSubProblem():
 
-    def __init__(self, Z_matrix, W_matrix, Lambda_matrix, X_matrix, rho):
+    def __init__(self, Z_matrix, W_matrix, Lambda_matrix, X_equation, X_part_with_inverse, rho):
         self.rho = rho
         self.Z = Z_matrix
         self.W = W_matrix
         self.Lambda = Lambda_matrix
-        self.X = X_matrix
+        self.X = X_equation
+        self.X_with_inverse = X_part_with_inverse
         self.V_k = self.compute_new_V_k()
 
     def __call__(self, *args, **kwargs):
         return self.V_k
 
     def compute_new_V_k(self):
-        X_transposed = get_matrix_transpose(self.X)
-        X_equation = get_matrix_multiplication(self.X, X_transposed) - X_transposed + self.X
-        first_brackets = (self.rho/2)*get_matrix_inverse(np.identity(self.Lambda.shape(0))+self.Lambda)
+        first_brackets = (self.rho / 2) * get_matrix_inverse(np.identity(self.Lambda.shape(0)) + self.Lambda)
         second_brackets = (get_matrix_transpose(W) - get_matrix_transpose(Z))
-        X_part_with_inverse = get_matrix_inverse(get_matrix_multiplication(X_equation, get_matrix_transpose(X_equation)))
-        return get_matrix_multiplication(get_matrix_multiplication(get_matrix_multiplication(first_brackets, second_brackets), get_matrix_transpose(X_equation)), X_part_with_inverse)
+        return get_matrix_multiplication(
+            get_matrix_multiplication(get_matrix_multiplication(first_brackets, second_brackets),
+                                      get_matrix_transpose(self.X)), self.X_with_inverse)
+
 
 class ZSubProblem():
 
@@ -60,9 +65,3 @@ class ZSubProblem():
 
     def __call__(self, *args, **kwargs):
         return self.Z_k
-
-
-
-
-
-
