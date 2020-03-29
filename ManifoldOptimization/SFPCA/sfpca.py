@@ -1,7 +1,10 @@
-from ManifoldOptimization.Utils.matrix_operations import reconstruct_vector_into_diagonal_matrix, get_matrix_multiplication, get_matrix_transpose
+import numpy as np
+
 from ManifoldOptimization.SFPCA.LambdaSubproblem.lambda_subproblem import LambdaSubproblem
 from ManifoldOptimization.SFPCA.VSubproblem.madmm import MADMM
-import numpy as np
+from ManifoldOptimization.Utils.matrix_operations import reconstruct_vector_into_diagonal_matrix, \
+    get_matrix_multiplication, get_matrix_transpose, get_matrix_diagonal
+
 
 class SFPCA():
 
@@ -17,25 +20,26 @@ class SFPCA():
     def __call__(self, *args, **kwargs):
         return self.execute_sfpca()
 
-
-#todo: czy zakładać, że macierz wejściowa jest od razu kwadratowa, czy zrobić to na różne przypadki?
-#todo: ktora macierz normalizowac? Wejsciowa? XXT?
+    # todo: czy zakładać, że macierz wejściowa jest od razu kwadratowa, czy zrobić to na różne przypadki?
+    # todo: ktora macierz normalizowac? Wejsciowa? XXT?
 
     def get_spectral_decomposition(self):
         """
         Function that gets decomposition of the input matrix
-        :return:
+        :return: eigenvalues, and eigenvectors
         """
         eigenvalues, eigenvectors = np.linalg.eig(self.X)
         Lambda_matrix = reconstruct_vector_into_diagonal_matrix(eigenvalues)
         return Lambda_matrix, eigenvectors
 
     def execute_sfpca(self):
+        """
+        Function that executes whole algorithm using given input
+        :return: eigenvalues vector, and eigenvectors matrix
+        """
         step_lambda, step_v = self.get_spectral_decomposition()
         for step in range(self.sfpca_steps):
             step_lambda = LambdaSubproblem(self.lambda_2, step_v, self.X)
             step_v = MADMM(step_lambda, self.X, self.rho, self.lambda_1, self.madmm_steps)
 
-        return step_lambda, step_v
-
-
+        return get_matrix_diagonal(step_lambda), step_v
