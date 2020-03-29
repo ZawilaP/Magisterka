@@ -38,6 +38,10 @@ class MADMM():
         self.new_V = self.execute_madmm()
 
     def execute_madmm(self):
+        """
+        Function that executes whole algorithm, for limited number of steps.
+        :return: eigenvalues matrix
+        """
         step_W = self.W_k
         step_V = self.V_k
         step_Z = self.Z_k
