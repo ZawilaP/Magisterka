@@ -1,6 +1,5 @@
 from ManifoldOptimization.Utils.matrix_operations import numpy_to_pandas, pandas_to_numpy, elementwise_multiplication, get_matrix_sign, get_matrix_transpose, get_matrix_inverse, get_matrix_multiplication
 import numpy as np
-import pandas as pd
 
 class WSubproblem():
 
@@ -41,10 +40,26 @@ class VSubProblem():
         self.W = W_matrix
         self.Lambda = Lambda_matrix
         self.X = X_matrix
+        self.V_k = self.compute_new_V_k()
+
+    def __call__(self, *args, **kwargs):
+        return self.V_k
 
     def compute_new_V_k(self):
         X_transposed = get_matrix_transpose(self.X)
+        X_equation = get_matrix_multiplication(self.X, X_transposed) - X_transposed + self.X
+        first_brackets = (self.rho/2)*get_matrix_inverse(np.identity(self.Lambda.shape(0))+self.Lambda)
+        second_brackets = (get_matrix_transpose(W) - get_matrix_transpose(Z))
+        X_part_with_inverse = get_matrix_inverse(get_matrix_multiplication(X_equation, get_matrix_transpose(X_equation)))
+        return get_matrix_multiplication(get_matrix_multiplication(get_matrix_multiplication(first_brackets, second_brackets), get_matrix_transpose(X_equation)), X_part_with_inverse)
 
+class ZSubProblem():
+
+    def __init__(self, Z_matrix, V_matrix, W_matrix):
+        self.Z_k = Z_matrix + V_matrix - W_matrix
+
+    def __call__(self, *args, **kwargs):
+        return self.Z_k
 
 
 
