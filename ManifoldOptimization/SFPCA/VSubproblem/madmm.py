@@ -1,6 +1,6 @@
 import numpy as np
 
-from ManifoldOptimization.SPFCA.VSubproblem.MADMM_Subproblems import WSubproblem, VSubProblem, ZSubProblem
+from ManifoldOptimization.SFPCA.VSubproblem.madmm_subproblems import WSubproblem, VSubProblem, ZSubProblem
 from ManifoldOptimization.Utils.matrix_operations import get_matrix_inverse, get_matrix_multiplication, \
     get_matrix_transpose
 
