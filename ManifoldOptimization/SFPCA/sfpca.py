@@ -40,7 +40,7 @@ class SFPCA():
         step_lambda, step_v = self.get_spectral_decomposition()
         for step in range(self.sfpca_steps):
             step_lambda = LambdaSubproblem(self.lambda_2, step_v, self.X)
-            step_v = MADMM(step_lambda, self.X, self.rho, self.lambda_1, self.madmm_steps)
+            step_v = MADMM(step_v, step_lambda, self.X, self.rho, self.lambda_1, self.madmm_steps)
 
         return get_matrix_diagonal(step_lambda), step_v
 

@@ -19,7 +19,7 @@ class MADMM():
     in it's subproblems.
     '''
 
-    def __init__(self, Lambda_Matrix, X_matrix, rho, lambda_1, n_steps):
+    def __init__(self, V_matrix, Lambda_Matrix, X_matrix, rho, lambda_1, n_steps):
         self.V_hat = V_matrix
         self.Lambda = Lambda_Matrix
         self.X = X_matrix

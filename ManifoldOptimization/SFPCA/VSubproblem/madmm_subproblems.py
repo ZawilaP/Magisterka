@@ -58,7 +58,7 @@ class VSubProblem():
         :return: eigenvalues matrix
         """
         first_brackets = (self.rho / 2) * get_matrix_inverse(np.identity(self.Lambda.shape(0)) + self.Lambda)
-        second_brackets = (get_matrix_transpose(W) - get_matrix_transpose(Z))
+        second_brackets = (get_matrix_transpose(self.W) - get_matrix_transpose(self.Z))
         return get_matrix_multiplication(
             get_matrix_multiplication(get_matrix_multiplication(first_brackets, second_brackets),
                                       get_matrix_transpose(self.X)), self.X_with_inverse)
