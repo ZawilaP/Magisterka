@@ -101,7 +101,7 @@ def vector_into_diagonal_matrix(vector: np.array) -> np.array:
     '''
     Transform singular values vector into diagonal matrix
     :param vector: 'np.array' vector to be transformed into matrix
-    :return: matrix with diagonal with lambda_k values, 0's otherwise
+    :return: matrix with diagonal with input vector values, 0's otherwise
     '''
     return np.identity(len(vector)) * np.outer(np.ones(len(vector)), vector)
 
@@ -111,9 +111,20 @@ def frobenius_norm(left_matrix: np.array, right_matrix: np.array) -> float:
     Calculate frobenius norm of difference of two matrices
     :param left_matrix: 'np.array'
     :param right_matrix: 'np.array'
-    :return:
+    :return: frobenius norm of difference of arrays
     """
     if left_matrix.shape != right_matrix.shape:
         raise AttributeError("Both matrices need to be of the same shape")
     matrix_difference = left_matrix - right_matrix
     return np.linalg.norm(matrix_difference, ord="fro")
+
+
+def soft_thresholding(matrix: np.array, lambda_constant: float) -> np.array:
+    """
+    Apply soft thresholding operator with lambda_constant to each element of an array
+    :param matrix: 'np.array'
+    :param lambda_constant: 'float' used in soft-thresholding
+    :return: soft thresholded array
+    """
+    soft_thresholding_function = lambda x: max(x - lambda_constant, 0)
+    return np.vectorize(soft_thresholding_function)(matrix)
