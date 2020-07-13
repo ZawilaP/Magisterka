@@ -1,4 +1,4 @@
-from ManifoldOptimization.Utils.matrix_operations import soft_thresholding
+from ManifoldOptimization.Utils.matrix_operations import soft_threshold
 
 
 class LambdaSubproblem():
@@ -14,5 +14,5 @@ class LambdaSubproblem():
 
     def fit(self):
         division_constant = 2
-        new_lambda = soft_thresholding(self.lambda_matrix, self.lambda_2 / division_constant)
+        new_lambda = soft_threshold(self.lambda_matrix, self.lambda_2 / division_constant)
         return new_lambda
