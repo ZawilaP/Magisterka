@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 
-from ManifoldOptimization.SFPCA.VSubproblem.madmm_subproblems import WSubproblem, VSubproblem, ZSubproblem, MADMM
+from ManifoldOptimization.SFPCA.VSubproblem.madmm import WSubproblem, VSubproblem, ZSubproblem, MADMM
 from ManifoldOptimization.Utils.matrix_operations import vector_into_diagonal_matrix
 
 
@@ -16,7 +16,7 @@ class MyTestCase(unittest.TestCase):
         w_matrix = np.array([[1, -1, 3], [11, 13, -11], [-3, 2, 9]])
         lambda_1 = 4
         rho = 2
-        initialized_w = WSubproblem(w_matrix, lambda_1, rho, verbosity=2)
+        initialized_w = WSubproblem(w_matrix, lambda_1, rho, verbosity=3)
         final_w = initialized_w.fit()
         print("==> Showing final_w")
         print(final_w)
@@ -25,19 +25,19 @@ class MyTestCase(unittest.TestCase):
 
     @staticmethod
     def test_v_subproblem():
-        x_matrix = np.array([[1, -1, 3], [-1, 2, 2], [3, 2, 5]])
+        x_matrix = np.array([[1, -1, 3], [-1, 1, 2], [3, 2, 1]])
         v_matrix, lambda_matrix_vector, _ = np.linalg.svd(x_matrix)
         lambda_matrix = vector_into_diagonal_matrix(lambda_matrix_vector)
         w_matrix = v_matrix
         z_matrix = np.zeros((3, 3))
         rho = 1 / 2
-        initialized_v = VSubproblem(w_matrix, z_matrix, x_matrix, v_matrix, lambda_matrix, rho, verbosity=2)
+        initialized_v = VSubproblem(w_matrix, z_matrix, x_matrix, v_matrix, lambda_matrix, rho, verbosity=3)
         final_v = initialized_v.fit()
         print("==> Showing final_v")
         print(final_v)
-        expected_result = np.array([[38.591981, 26.723627, 85.750215],
-                                    [-7.750934, 11.882393, -0.214772],
-                                    [-10.830568, -6.937643, 7.036391]])
+        expected_result = np.array([[ 21.875269,   9.789922,  26.610868],
+       [-34.176691, -26.756848,  37.938325],
+       [  4.096128,  -6.576053,  -0.947916]])
         np.testing.assert_array_almost_equal(final_v, expected_result)
 
     @staticmethod
