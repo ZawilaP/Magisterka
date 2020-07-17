@@ -29,7 +29,7 @@ class SFPCA():
             if self.verbosity > 0:
                 print(f"==> SFPCA ==> Showing v_matrix from step {i}")
                 print(v_matrix)
-            lambda_matrix = LambdaSubproblem(lambda_matrix, self.lambda_2).fit()
+            lambda_matrix = LambdaSubproblem(self.x_matrix, v_matrix, self.lambda_2).fit()
             if self.verbosity > 0:
                 print(f"==> SFPCA ==> Showing lambda_matrix from step {i}")
                 print(lambda_matrix)

@@ -58,7 +58,7 @@ class MyTestCase(unittest.TestCase):
 
     @staticmethod
     def test_madmm():
-        x_matrix = np.array([[1, -1, 3], [-1, 2, 2], [3, 2, 5]])
+        x_matrix = np.array([[1, -2, 3], [-2, 1, 5], [3, 5, 1]])
         v_matrix, lambda_matrix_vector, _ = np.linalg.svd(x_matrix)
         lambda_matrix = vector_into_diagonal_matrix(lambda_matrix_vector)
         rho = 10
