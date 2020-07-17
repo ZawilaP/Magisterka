@@ -13,15 +13,19 @@ class MyTestCase(unittest.TestCase):
 
     @staticmethod
     def test_w_subproblem():
-        w_matrix = np.array([[1, -1, 3], [11, 13, -11], [-3, 2, 9]])
-        lambda_1 = 4
-        rho = 2
-        initialized_w = WSubproblem(w_matrix, lambda_1, rho, verbosity=3)
+        x_matrix = np.array([[1, -1, 3], [-1, 1, 2], [3, 2, 1]])
+        v_matrix, _, _ = np.linalg.svd(x_matrix)
+        z_matrix = np.zeros((3, 3))
+        lambda_1 = 0.1
+        rho = 1
+        initialized_w = WSubproblem(v_matrix, z_matrix, lambda_1, rho, verbosity=3)
         final_w = initialized_w.fit()
-        print("==> Showing final_w")
+        print("==> Showing final_w:")
         print(final_w)
-        expected_result = np.array([[0, 0, 1], [9, 11, -9], [-1, 0, 7]])
-        np.testing.assert_array_equal(final_w, expected_result)
+        expected_result = np.array([[-0.510834, -0.492851, -0.424794],
+                                    [-0.173369, -0.364142, 0.742521],
+                                    [-0.643069, 0.558103, 0.021447]])
+        np.testing.assert_array_almost_equal(final_w, expected_result)
 
     @staticmethod
     def test_v_subproblem():
@@ -33,11 +37,11 @@ class MyTestCase(unittest.TestCase):
         rho = 1 / 2
         initialized_v = VSubproblem(w_matrix, z_matrix, x_matrix, v_matrix, lambda_matrix, rho, verbosity=3)
         final_v = initialized_v.fit()
-        print("==> Showing final_v")
+        print("==> Showing final_v:")
         print(final_v)
-        expected_result = np.array([[ 21.875269,   9.789922,  26.610868],
-       [-34.176691, -26.756848,  37.938325],
-       [  4.096128,  -6.576053,  -0.947916]])
+        expected_result = np.array([[21.875269, 9.789922, 26.610868],
+                                    [-34.176691, -26.756848, 37.938325],
+                                    [4.096128, -6.576053, -0.947916]])
         np.testing.assert_array_almost_equal(final_v, expected_result)
 
     @staticmethod
@@ -49,7 +53,7 @@ class MyTestCase(unittest.TestCase):
         z_matrix = np.zeros((3, 3))
         initialized_z = ZSubproblem(z_matrix, w_matrix, v_matrix)
         final_z = initialized_z.fit()
-        print("==> Showing final_z")
+        print("==> Showing final_z:")
         print(final_z)
         expected_result = np.array([[37.591981, 27.723627, 82.750215],
                                     [-18.750934, -1.117607, 10.785228],
@@ -66,7 +70,7 @@ class MyTestCase(unittest.TestCase):
         n_steps = 3
         initialized_v = MADMM(x_matrix, v_matrix, lambda_matrix, lambda_1, rho, n_steps, verbosity=2)
         final_v = initialized_v.fit()
-        print("==> Showing final_v")
+        print("==> Showing final_v:")
         print(final_v)
         expected_result = np.array([[38.591981, 26.723627, 85.750215],
                                     [-7.750934, 11.882393, -0.214772],

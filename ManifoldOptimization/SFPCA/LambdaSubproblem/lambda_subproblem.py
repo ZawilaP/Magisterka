@@ -20,7 +20,7 @@ class LambdaSubproblem():
         division_constant = 2
         v_transposed_x_v = multiply_matrices(multiply_matrices(transpose_matrix(self.v_matrix), self.x_matrix),
                                              self.v_matrix)
-        if self.verbosity > 1:
+        if self.verbosity > 2:
             print("==> LambdaSubproblem ==> Showing v_transposed_x_v")
             print(v_transposed_x_v)
         new_lambda = soft_threshold(v_transposed_x_v, self.lambda_2 / division_constant)
