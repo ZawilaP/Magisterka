@@ -3,7 +3,8 @@ import unittest
 import numpy as np
 
 from ManifoldOptimization.SFPCA.VSubproblem.madmm import WSubproblem, VSubproblem, ZSubproblem, MADMM
-from ManifoldOptimization.Utils.matrix_operations import vector_into_diagonal_matrix
+from ManifoldOptimization.Utils.matrix_operations import vector_into_diagonal_matrix, multiply_matrices, \
+    transpose_matrix
 
 
 class MyTestCase(unittest.TestCase):
@@ -35,13 +36,13 @@ class MyTestCase(unittest.TestCase):
         w_matrix = v_matrix
         z_matrix = np.zeros((3, 3))
         rho = 1 / 2
-        initialized_v = VSubproblem(w_matrix, z_matrix, x_matrix, v_matrix, lambda_matrix, rho, verbosity=3)
+        initialized_v = VSubproblem(w_matrix, z_matrix, x_matrix, lambda_matrix, rho, verbosity=3)
         final_v = initialized_v.fit()
         print("==> Showing final_v:")
         print(final_v)
-        expected_result = np.array([[21.875269, 9.789922, 26.610868],
-                                    [-34.176691, -26.756848, 37.938325],
-                                    [4.096128, -6.576053, -0.947916]])
+        expected_result = np.array([[-0.610834, 0.45383, -0.648784],
+                                    [-0.273369, -0.889917, -0.365126],
+                                    [-0.743069, -0.045674, 0.667655]])
         np.testing.assert_array_almost_equal(final_v, expected_result)
 
     @staticmethod
@@ -72,10 +73,11 @@ class MyTestCase(unittest.TestCase):
         final_v = initialized_v.fit()
         print("==> Showing final_v:")
         print(final_v)
-        expected_result = np.array([[38.591981, 26.723627, 85.750215],
-                                    [-7.750934, 11.882393, -0.214772],
-                                    [-10.830568, -6.937643, 7.036391]])
-        np.testing.assert_array_almost_equal(final_v, expected_result)
+        final_v_v_t = multiply_matrices(final_v, transpose_matrix(final_v))
+        print("==> Final_v: should be orthonormal, showing final_v multiplied by it's transpose:")
+        print(final_v_v_t)
+        expected_result = np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
+        np.testing.assert_array_almost_equal(final_v_v_t, expected_result)
 
 
 if __name__ == '__main__':

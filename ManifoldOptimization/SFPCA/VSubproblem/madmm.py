@@ -1,12 +1,10 @@
 import numpy as np
-
-from ManifoldOptimization.Utils.matrix_operations import matrix_sign, soft_threshold, elementwise_multiplication, \
-    transpose_matrix, multiply_matrices
-
-from pymanopt.manifolds import Stiefel
+import tensorflow as tf
 from pymanopt import Problem
+from pymanopt.manifolds import Stiefel
 from pymanopt.solvers import SteepestDescent
-import autograd.numpy as anp
+
+from ManifoldOptimization.Utils.matrix_operations import matrix_sign, soft_threshold, elementwise_multiplication
 
 
 class MADMM():
@@ -32,7 +30,7 @@ class MADMM():
             if self.verbosity > 1:
                 print("\n")
                 print(f"=============== MADMM step {i} ===============")
-            v_matrix = VSubproblem(w_matrix, z_matrix, self.x_matrix, v_matrix, self.lambda_matrix, self.rho,
+            v_matrix = VSubproblem(w_matrix, z_matrix, self.x_matrix, self.lambda_matrix, self.rho,
                                    self.verbosity).fit()
             if self.verbosity > 1:
                 print(f"==> MADMM ==> Showing v_matrix from step {i}:")
@@ -75,11 +73,11 @@ class WSubproblem():
             print(v_sum_z_matrix_sign)
         v_sum_z_matrix_absolute = np.abs(v_sum_z)
         if self.verbosity > 2:
-            print("==> WSubproblem ==> Showing w_matrix_absolute:")
+            print("==> WSubproblem ==> Showing v_sum_z_matrix_absolute:")
             print(v_sum_z_matrix_absolute)
         v_matrix_thresholded = soft_threshold(v_sum_z_matrix_absolute, self.lambda_1 / self.rho)
         if self.verbosity > 2:
-            print("==> WSubproblem ==> Showing w_matrix_thresholded:")
+            print("==> WSubproblem ==> Showing v_matrix_thresholded:")
             print(v_matrix_thresholded)
         return elementwise_multiplication(v_sum_z_matrix_sign, v_matrix_thresholded)
 
@@ -92,61 +90,35 @@ class VSubproblem():
     $$
     """
 
-    def __init__(self, w_matrix: np.array, z_matrix: np.array, x_matrix: np.array, v_matrix: np.array,
+    def __init__(self, w_matrix: np.array, z_matrix: np.array, x_matrix: np.array,
                  lambda_matrix: np.array, rho: float, verbosity: int = 0):
         self.w_matrix = w_matrix
         self.z_matrix = z_matrix
         self.x_matrix = x_matrix
-        self.v_matrix = v_matrix
         self.lambda_matrix = lambda_matrix
         self.rho = rho
         self.verbosity = verbosity
 
     def fit(self):
-        x_transposed = transpose_matrix(self.x_matrix)
+        v_matrix_shape = (self.w_matrix.shape[0], self.w_matrix.shape[1])
+        w_matrix = tf.convert_to_tensor(self.w_matrix, dtype=tf.float64)
+        z_matrix = tf.convert_to_tensor(self.z_matrix, dtype=tf.float64)
+        x_matrix = tf.convert_to_tensor(self.x_matrix, dtype=tf.float64)
+        lambda_matrix = tf.convert_to_tensor(self.lambda_matrix, dtype=tf.float64)
+        x = tf.Variable(initial_value=tf.ones(v_matrix_shape, dtype=tf.dtypes.float64))
+
+        cost = tf.norm(x_matrix - tf.linalg.matmul(tf.linalg.matmul(x, lambda_matrix), tf.transpose(x))) + self.rho / 2 * tf.norm(x - w_matrix + z_matrix)
+
+        manifold = Stiefel(v_matrix_shape[0], v_matrix_shape[1])
+        problem = Problem(manifold=manifold, cost=cost, arg=x)
+        solver = SteepestDescent(logverbosity=self.verbosity)
+
+        v_optimal, _ = solver.solve(problem)
         if self.verbosity > 2:
-            print("==> VSubproblem ==> Showing x_transposed:")
-            print(x_transposed)
-        v_transposed = transpose_matrix(self.v_matrix)
-        if self.verbosity > 2:
-            print("==> VSubproblem ==> Showing v_transposed:")
-            print(v_transposed)
-        w_transposed = transpose_matrix(self.w_matrix)
-        if self.verbosity > 2:
-            print("==> VSubproblem ==> Showing w_transposed:")
-            print(w_transposed)
-        z_transposed = transpose_matrix(self.z_matrix)
-        if self.verbosity > 2:
-            print("==> VSubproblem ==> Showing z_transposed:")
-            print(z_transposed)
-        x_x_transposed = multiply_matrices(self.x_matrix, x_transposed)
-        if self.verbosity > 2:
-            print("==> VSubproblem ==> Showing x_x_transposed:")
-            print(x_x_transposed)
-        x_transposed_sum_x = 2 * self.x_matrix
-        if self.verbosity > 2:
-            print("==> VSubproblem ==> Showing x_transposed_sum_x:")
-            print(x_transposed_sum_x)
-        double_v_transposed_x_x_transposed = 2 * multiply_matrices(v_transposed, x_x_transposed)
-        if self.verbosity > 2:
-            print("==> VSubproblem ==> Showing double_v_transposed_x_x_transposed:")
-            print(double_v_transposed_x_x_transposed)
-            print("==> VSubproblem ==> Showing lambda_matrix:")
-            print(self.lambda_matrix)
-        double_lambda_v_transposed = 2 * multiply_matrices(self.lambda_matrix, v_transposed)
-        if self.verbosity > 2:
-            print("==> VSubproblem ==> Showing double_lambda_v_transposed:")
-            print(double_lambda_v_transposed)
-        double_lambda_v_transposed_x_transposed_sum_x = multiply_matrices(double_lambda_v_transposed,
-                                                                          x_transposed_sum_x)
-        if self.verbosity > 2:
-            print("==> VSubproblem ==> Showing double_lambda_v_transposed_x_transposed_sum_x:")
-            print(double_lambda_v_transposed_x_transposed_sum_x)
-        lambdas_v_and_x_part = double_v_transposed_x_x_transposed - double_lambda_v_transposed_x_transposed_sum_x
-        if self.verbosity > 2:
-            print("==> VSubproblem ==> Showing lambdas_v_and_x_part:")
-            print(lambdas_v_and_x_part)
-        return lambdas_v_and_x_part - self.rho * w_transposed + self.rho * z_transposed
+            print("==> WSubproblem ==> Showing v_optimal:")
+            print(v_optimal)
+
+        return v_optimal
 
 
 class ZSubproblem():
