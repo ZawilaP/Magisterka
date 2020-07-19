@@ -22,20 +22,20 @@ class SFPCA():
         v_matrix, lambda_matrix_vector, _ = np.linalg.svd(self.x_matrix)
         lambda_matrix = vector_into_diagonal_matrix(lambda_matrix_vector)
         for i in range(self.sfpca_steps):
-            if self.verbosity > 0:
+            if self.verbosity > -1:
                 print("\n")
                 print(f"=============== SFPCA step {i} ================")
             v_matrix = MADMM(self.x_matrix, v_matrix, lambda_matrix, self.lambda_1, self.rho, self.madmm_steps, self.verbosity).fit()
-            if self.verbosity > 0:
+            if self.verbosity > -1:
                 print(f"==> SFPCA ==> Showing v_matrix from step {i}")
                 print(v_matrix)
             lambda_matrix = LambdaSubproblem(self.x_matrix, v_matrix, self.lambda_2).fit()
-            if self.verbosity > 0:
+            if self.verbosity > -1:
                 print(f"==> SFPCA ==> Showing lambda_matrix from step {i}")
                 print(lambda_matrix)
-        if self.verbosity > 0:
+        if self.verbosity > -1:
             print(f"==> SFPCA ==> Showing final v_matrix")
             print(v_matrix)
             print(f"==> SFPCA ==> Showing final lambda_matrix")
             print(lambda_matrix)
-        return multiply_matrices(multiply_matrices(v_matrix, lambda_matrix), transpose_matrix(v_matrix))
+        return v_matrix, lambda_matrix
