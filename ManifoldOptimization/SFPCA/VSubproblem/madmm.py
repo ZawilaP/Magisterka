@@ -45,9 +45,9 @@ class MADMM():
                 print(f"==> MADMM ==> Showing z_matrix from step {i}:")
                 print(z_matrix)
         if self.verbosity > 1:
-            print("==> MADMM ==> Showing final v_matrix:")
-            print(v_matrix)
-        return v_matrix
+            print("==> MADMM ==> Showing final w_matrix:")
+            print(w_matrix)
+        return w_matrix
 
 
 class WSubproblem():
@@ -112,8 +112,11 @@ class VSubproblem():
         manifold = Stiefel(v_matrix_shape[0], v_matrix_shape[1])
         problem = Problem(manifold=manifold, cost=cost, arg=x)
         solver = SteepestDescent(logverbosity=self.verbosity)
+        if self.verbosity > 2:
+            v_optimal, _ = solver.solve(problem)
+        else:
+            v_optimal = solver.solve(problem)
 
-        v_optimal, _ = solver.solve(problem)
         if self.verbosity > 2:
             print("==> WSubproblem ==> Showing v_optimal:")
             print(v_optimal)

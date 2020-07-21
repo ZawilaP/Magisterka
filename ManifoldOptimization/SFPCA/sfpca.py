@@ -9,7 +9,7 @@ class SFPCA():
     """
     Calculate SFPCA
     """
-    def __init__(self, x_matrix, lambda_1, lambda_2, rho, madmm_steps, sfpca_steps, verbosity):
+    def __init__(self, x_matrix, lambda_1, lambda_2, rho, madmm_steps, sfpca_steps, verbosity: int = -1):
         self.x_matrix = x_matrix
         self.lambda_1 = lambda_1
         self.lambda_2 = lambda_2
