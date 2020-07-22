@@ -12,18 +12,19 @@ class MADMM():
     Calculate MADMM for V subproblem of SFPCA
     """
 
-    def __init__(self, x_matrix: np.array, v_matrix: np.array, lambda_matrix: np.array, lambda_1: float, rho: float = 1,
-                 n_steps: int = 100, verbosity: int = 0):
+    def __init__(self, x_matrix: np.array, v_matrix: np.array, lambda_matrix: np.array, lambda_1: float, sfpca_steps: int,
+                 current_sfpca_step: int, rho: float = 1, n_steps: int = 100, verbosity: int = 0):
         self.x_matrix = x_matrix
         self.v_matrix = v_matrix
         self.lambda_matrix = lambda_matrix
         self.lambda_1 = lambda_1
         self.rho = rho
         self.n_steps = n_steps
+        self.sfpca_steps = sfpca_steps
+        self.current_sfpca_step = current_sfpca_step
         self.verbosity = verbosity
 
     def fit(self):
-        v_matrix = self.v_matrix
         w_matrix = self.v_matrix
         z_matrix = np.zeros((w_matrix.shape[0], w_matrix.shape[1]))
         for i in range(self.n_steps):
@@ -40,14 +41,19 @@ class MADMM():
             if self.verbosity > 1:
                 print(f"==> MADMM ==> Showing w_matrix from step {i}:")
                 print(w_matrix)
+
             z_matrix = ZSubproblem(z_matrix, w_matrix, v_matrix).fit()
             if self.verbosity > 1:
                 print(f"==> MADMM ==> Showing z_matrix from step {i}:")
                 print(z_matrix)
+
         if self.verbosity > 1:
-            print("==> MADMM ==> Showing final w_matrix:")
+            print("==> MADMM ==> Showing final v_matrix:")
             print(w_matrix)
-        return w_matrix
+
+        returned_matrix = v_matrix if (self.current_sfpca_step < self.sfpca_steps - 1) else w_matrix
+
+        return returned_matrix
 
 
 class WSubproblem():
@@ -71,10 +77,12 @@ class WSubproblem():
         if self.verbosity > 2:
             print("==> WSubproblem ==> Showing v_sum_z_matrix_sign:")
             print(v_sum_z_matrix_sign)
+
         v_sum_z_matrix_absolute = np.abs(v_sum_z)
         if self.verbosity > 2:
             print("==> WSubproblem ==> Showing v_sum_z_matrix_absolute:")
             print(v_sum_z_matrix_absolute)
+
         v_matrix_thresholded = soft_threshold(v_sum_z_matrix_absolute, self.lambda_1 / self.rho)
         if self.verbosity > 2:
             print("==> WSubproblem ==> Showing v_matrix_thresholded:")

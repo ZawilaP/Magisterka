@@ -25,11 +25,23 @@ class SFPCA():
             if self.verbosity > -1:
                 print("\n")
                 print(f"=============== SFPCA step {i} ================")
-            v_matrix = MADMM(self.x_matrix, v_matrix, lambda_matrix, self.lambda_1, self.rho, self.madmm_steps, self.verbosity).fit()
+            v_matrix = MADMM(x_matrix=self.x_matrix,
+                             v_matrix=v_matrix,
+                             lambda_matrix=lambda_matrix,
+                             lambda_1=self.lambda_1,
+                             sfpca_steps=self.sfpca_steps,
+                             current_sfpca_step=i,
+                             rho=self.rho,
+                             n_steps=self.madmm_steps,
+                             verbosity=self.verbosity).fit()
             if self.verbosity > -1:
                 print(f"==> SFPCA ==> Showing v_matrix from step {i}")
                 print(v_matrix)
-            lambda_matrix = LambdaSubproblem(self.x_matrix, v_matrix, self.lambda_2).fit()
+
+            if i < self.sfpca_steps - 1:
+                lambda_matrix = LambdaSubproblem(x_matrix=self.x_matrix,
+                                                 v_matrix=v_matrix,
+                                                 lambda_2=self.lambda_2).fit()
             if self.verbosity > -1:
                 print(f"==> SFPCA ==> Showing lambda_matrix from step {i}")
                 print(lambda_matrix)

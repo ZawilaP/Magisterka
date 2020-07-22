@@ -19,12 +19,12 @@ rho = 1
 madmm_steps = 5
 sfpca_steps = 10
 dictionary_of_results = {}
-lambda_1_range = [0.005, 0.01, 0.015]
-lambda_2_range = [0.4, 0.45, 0.5, 0.55, 0.6]
+lambda_1_range = [0.01, 0.001, 0.0015]
+lambda_2_range = [0.1, 0.5, 0.15, 0.1]
 
 for lambda_1 in lambda_1_range:
     for lambda_2 in lambda_2_range:
-        sfpca = SFPCA(x_matrix, lambda_1, lambda_2, rho, madmm_steps, sfpca_steps)
+        sfpca = SFPCA(x_matrix, lambda_1, lambda_2, rho, madmm_steps, sfpca_steps, verbosity=10)
         v_final_matrix, lambda_final_matrix = sfpca.fit()
         print(f"==> Lambda_1 = {lambda_1}, Lambda_2 = {lambda_2}")
         print("==> Showing v_final_matrix")
@@ -45,8 +45,10 @@ for lambda_1 in lambda_1_range:
                                                                                   reconstructed_sparse_x,
                                                                                   norm_of_difference]
 
-current_time = datetime.now
-pkl.dump(dictionary_of_results, open(f"results_of_lambda_grid_search_{current_time}.p", "wb"))
+current_time = datetime.datetime.now()
+formatted_time = current_time.strftime("%m_%d_%Y_%H_%M_%S")
+
+pkl.dump(dictionary_of_results, open(f"results_of_grid_search_{formatted_time}_lam1_{lambda_1_range}_lam2_{lambda_2_range}.p", "wb"))
 
 for key, value in dictionary_of_results.items():
     print("==================================================")
