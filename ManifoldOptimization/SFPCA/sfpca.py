@@ -18,6 +18,12 @@ class SFPCA():
         self.sfpca_steps = sfpca_steps
         self.verbosity = verbosity
 
+    # todo: Wyznaczyc minimalna lambda_1 co wyzeruje nam macierz V (dla jakich lambd 0 spelnia warunek optymalnosci na Stiefelu)
+    # todo: W ogolnym problemnie na V, a nie podkrokach w MADMM
+    # todo: Zeby ograniczyc do pierwszych k wartosci szczegolnych i wektorow szczegolnych (KOLUMNOWO)
+
+    # todo: Dodaj progowanie wartości i wtedy moze cross-validacja na Grassmanianie byc dobrym wyznacznikiem znajdowania V
+    # todo: Kryterium stopu z jakimś poziomem tolerancji
     def fit(self):
         v_matrix, lambda_matrix_vector, _ = np.linalg.svd(self.x_matrix)
         lambda_matrix = vector_into_diagonal_matrix(lambda_matrix_vector)
