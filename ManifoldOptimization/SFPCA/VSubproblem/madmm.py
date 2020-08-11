@@ -51,7 +51,7 @@ class MADMM():
             print("==> MADMM ==> Showing final v_matrix:")
             print(w_matrix)
 
-        returned_matrix = v_matrix if (self.current_sfpca_step < self.sfpca_steps - 1) else w_matrix
+        returned_matrix = w_matrix #if (self.current_sfpca_step < self.sfpca_steps - 1) else w_matrix
 
         return returned_matrix
 

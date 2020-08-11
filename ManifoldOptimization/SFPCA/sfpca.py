@@ -44,10 +44,10 @@ class SFPCA():
                 print(f"==> SFPCA ==> Showing v_matrix from step {i}")
                 print(v_matrix)
 
-            if i < self.sfpca_steps - 1:
-                lambda_matrix = LambdaSubproblem(x_matrix=self.x_matrix,
-                                                 v_matrix=v_matrix,
-                                                 lambda_2=self.lambda_2).fit()
+            #if i < self.sfpca_steps - 1:
+            lambda_matrix = LambdaSubproblem(x_matrix=self.x_matrix,
+                                             v_matrix=v_matrix,
+                                             lambda_2=self.lambda_2).fit()
             if self.verbosity > -1:
                 print(f"==> SFPCA ==> Showing lambda_matrix from step {i}")
                 print(lambda_matrix)
