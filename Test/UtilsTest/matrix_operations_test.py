@@ -141,14 +141,14 @@ class MyTestCase(unittest.TestCase):
     def test_soft_thresholding():
         matrix1 = np.arange(4).reshape(2, 2)
         lambda_constant1 = 1
-        soft_thresholded_matrix1 = soft_thresholding(matrix1, lambda_constant1)
+        soft_thresholded_matrix1 = soft_threshold(matrix1, lambda_constant1)
         print("==> Showing soft_thresholded_matrix1:")
         print(soft_thresholded_matrix1)
         expected_result1 = np.array([[0, 0], [1, 2]])
 
         matrix2 = np.array([[10, 15], [3, 4.5]])
         lambda_constant2 = 4
-        soft_thresholded_matrix2 = soft_thresholding(matrix2, lambda_constant2)
+        soft_thresholded_matrix2 = soft_threshold(matrix2, lambda_constant2)
         print("==> Showing soft_thresholded_matrix2:")
         print(soft_thresholded_matrix2)
         expected_result2 = np.array([[6, 11], [0, 0.5]])

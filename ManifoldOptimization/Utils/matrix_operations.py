@@ -22,8 +22,8 @@ def multiply_matrices(left_matrix: np.array, right_matrix: np.array) -> np.array
     :param right_matrix:  'np.array' right side of multiplication
     :return: multiplied left by right
     """
-    if left_matrix.shape != right_matrix.shape:
-        raise AttributeError("Both matrices need to be of the same shape")
+    if left_matrix.shape[1] != right_matrix.shape[0]:
+        raise AttributeError(f"Both matrices need to have correct shapes to multiply, got {left_matrix.shape}, {right_matrix.shape}")
     return np.dot(left_matrix, right_matrix)
 
 
@@ -119,7 +119,7 @@ def frobenius_norm(left_matrix: np.array, right_matrix: np.array) -> float:
     return np.linalg.norm(matrix_difference, ord="fro")
 
 
-def soft_thresholding(matrix: np.array, lambda_constant: float) -> np.array:
+def soft_threshold(matrix: np.array, lambda_constant: float) -> np.array:
     """
     Apply soft thresholding operator with lambda_constant to each element of an array
     :param matrix: 'np.array'
