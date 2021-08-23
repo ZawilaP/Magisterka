@@ -4,7 +4,7 @@ import numpy as np
 import plotly.graph_objects as go
 
 with open(
-        r"C:\Users\piotr\PycharmProjects\Magisterka\Test\results_of_grid_search_07_26_2020_12_16_12_lam1_[0.00127, 0.00123]_lam2_[0.65, 0.66, 0.64]_m_steps_3_s_steps_10.p",
+        r"your_path",
         "rb") as file:
     results_dict = pkl.load(file)
 
