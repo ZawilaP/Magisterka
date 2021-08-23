@@ -15,7 +15,7 @@ class MyTestCase(unittest.TestCase):
         x_matrix = np.array([[1, -1, 3], [-1, 1, 2], [3, 2, 1]])
         v_matrix, _, _ = np.linalg.svd(x_matrix)
         sample_lambda_2 = 2
-        verbosity = 2
+        verbosity = 3
         initialized_lambda = LambdaSubproblem(x_matrix, v_matrix, sample_lambda_2, verbosity)
         final_lambda = initialized_lambda.fit()
         print("==> Showing final_lambda:")
